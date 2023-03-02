@@ -1,8 +1,7 @@
 # Real Benchmarks in Flame's Evaluation
-The real benchmarks used in Flame's evaluation.
-The applications in the benchmarks are collected from ServerlessBench and FunctionBench. By configuring different memory sizes and input parameters for these applications, we expand the size of the benchmark pool to [384](https://github.com/ykiauz/Flame/blob/main/tracedata/functions.txt) functions. 
-
-The application name consists of the function ID and its functionality, e.g., case9-matmul. These functions run on the OpenFaas platform and the handle.py is the entry function. We built a local storage service to replace the existing S3 API in our code. The dataset directory contains the files that the function needs to download, including pictures, text, and videos.
+## Benchmark Pool
+The applications in the benchmark pool are collected from ServerlessBench and FunctionBench. Each folder in this directory represents a real benchmark application.
+The folder name consists of the function ID and its functionality, e.g., case9-matmul. These functions run on the OpenFaas platform and handle.py file is the entry function. We built a local storage service to replace the existing S3 API in our code. The dataset directory contains the files that the function needs to download, including pictures, text, and videos.
 
 These functions are run with Python 3.4 (ML applictions in tensorflow:1.4.1), we list the necessary requirements in the following:
 
@@ -17,6 +16,10 @@ pip install opencv-python
 pip install Scikit-learn==0.20.4
 ```
 
+## Expand Benchmark Pool in our Testbed
+By configuring different memory sizes and input parameters for these applications, we expand the size of the benchmark pool to 384 different functions ([see here](https://github.com/ykiauz/Flame/blob/main/tracedata/functions.txt)). 
+
+These functions present a wide range of application characteristics, including the application type, execution time and coldstart overhead. 
 Here is the details of our real benchmarks:
 | **ID** | **Source**      | **Function**             | **Memory**    | **Pamamter**                                      | **Execution Time** | **** | ****  | **Startup Time** | **** | ****  |
 |--------|-----------------|--------------------------|---------------|---------------------------------------------------|--------------------|------|-------|------------------|------|-------|
@@ -43,5 +46,11 @@ Here is the details of our real benchmarks:
 | 20     | ServerlessBench | lr-prediction            | 256MB-2048MB  | data_size=[2,5,10,20]                             | 72                 | 139  | 230   | 1733             | 3001 | 6838  |
 | 21     | ServerlessBench | face-detection           | 256MB-2560MB  | video_size=[256,512,1024]                         | 569                | 1150 | 2801  | 2189             | 2868 | 3901  |
 | 22     | ServerlessBench | rnn-generate-char-level  | 256MB-2560MB  | lang=[English,German]; input_len=[20,50,80,100]   | 5                  | 270  | 1864  | 1007             | 1356 | 3551  |
+
+## Mapping with Azure's Function Traces
+
+Based on the benchmarks in the benechmark pool, we follow the same request arrival pattern in Azure's function traces to generate workload. For each function in these traces, we find the nearest match of a benchmark function from our benchmark pool based on its memory allocation and execution time to represent the corresponding function behavior. The function's name, memory size, execution time and startup time in these traces are replaced by the function information in our benchmark pool.
+
+We list the function mappings in 8 different traces ([see here](https://github.com/ykiauz/Flame/tree/main/tracedata)). 
 
 
