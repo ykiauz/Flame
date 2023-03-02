@@ -1,6 +1,6 @@
 # Real Benchmarks in Flame's Evaluation
 The real benchmarks used in Flame's evaluation.
-The applications in the benchmarks are collected from ServerlessBench and FunctionBench. By configuring different memory sizes and input parameters for these applications, we expand the size of the benchmark pool to 384 functions. 
+The applications in the benchmarks are collected from ServerlessBench and FunctionBench. By configuring different memory sizes and input parameters for these applications, we expand the size of the benchmark pool to [384](https://github.com/ykiauz/Flame/blob/main/tracedata/functions.txt) functions. 
 
 The application name consists of the function ID and its functionality, e.g., case9-matmul. These functions run on the OpenFaas platform and the handle.py is the entry function. We built a local storage service to replace the existing S3 API in our code. The dataset directory contains the files that the function needs to download, including pictures, text, and videos.
 
